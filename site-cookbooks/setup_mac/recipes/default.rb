@@ -34,6 +34,7 @@ end
 {
   "http://iterm2.com/downloads/stable/iterm2_v1_0_0.zip" => "iTerm",
   "http://i.agilebits.com/dist/1P/mac4/1Password-4.0.2.zip" => "1Password 4",
+  "http://cachefly.alfredapp.com/Alfred_2.0.9_214.zip" => "Alfred 2",
 }.each_pair do |url, name|
   unless File.exist?("/Applications/#{name}.app")
     download_to = "#{Chef::Config[:file_cache_path]}/#{File.basename(url)}"
