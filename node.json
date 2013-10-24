@@ -1,6 +1,5 @@
 {
   "run_list": [
-    "recipe[homebrew]",
     "recipe[setup_mac]"
   ]
 }
