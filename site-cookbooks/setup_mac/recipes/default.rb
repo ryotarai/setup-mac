@@ -9,14 +9,19 @@
 
 require 'shellwords'
 
-user = nil
-user_data = nil
-node["etc"]["passwd"].find do |u, data|
-  if u !~ /^_/ && !(%w! daemon Guest nobody root !.include?(u))
-    user = u
-    user_data = data
-  end
+passwd = node["etc"]["passwd"].dup
+users = passwd.reject do |u, data|
+  u =~ /^_/ || %w! daemon Guest nobody root !.include?(u)
 end
+
+if users.size > 1
+  raise "Cannot determine the user (#{users})"
+end
+
+username = users.first.first
+userdata = users.first.last
+
+
 
 dmg_package 'MacVim-Kaoriya' do
   volumes_dir 'MacVim-Kaoriya'
@@ -43,7 +48,7 @@ end
     end
     execute "unzip #{download_to} -d /Applications/"
     app_path = Shellwords.shellescape("/Applications/#{name}.app")
-    execute "chown -R #{user}:staff #{app_path}"
+    execute "chown -R #{username}:staff #{app_path}"
   end
 end
 
@@ -53,26 +58,26 @@ end
   end
 end
 
-user user do
+user username do
   action :modify
   shell '/bin/zsh'
 end
 
 execute "dotfiles/setup.sh" do
-  command File.expand_path(".dotfiles/setup.sh", user_data['dir'])
-  user user
+  command File.expand_path(".dotfiles/setup.sh", userdata['dir'])
+  user username
   action :nothing
 end
 
-git File.expand_path(".dotfiles", user_data['dir']) do
+git File.expand_path(".dotfiles", userdata['dir']) do
   repository "git@github.com:ryotarai/dotfiles.git"
   notifies :run, "execute[dotfiles/setup.sh]"
-  user user
+  user username
 end
 
-git File.expand_path(".oh-my-zsh", user_data['dir']) do
+git File.expand_path(".oh-my-zsh", userdata['dir']) do
   repository "git://github.com/robbyrussell/oh-my-zsh.git"
-  user user
+  user username
 end
 
 
