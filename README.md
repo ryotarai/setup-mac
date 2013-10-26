@@ -1,5 +1,5 @@
 ```
-bundle install
-berks install --path=cookbooks
-sudo chef-solo -c .chef/solo.rb
+git clone https://github.com/ryotarai/setup-mac.git
+cd setup-mac
+./setup
 ```
