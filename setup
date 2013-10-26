@@ -1,0 +1,8 @@
+#!/bin/sh
+if ! [ -f /usr/bin/bundle ]; then
+    /usr/bin/gem install bundler
+fi
+/usr/bin/bundle install
+/usr/bin/berks install --path=cookbooks
+sudo /usr/bin/chef-solo -c .chef/solo.rb
+
