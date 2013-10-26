@@ -80,4 +80,17 @@ git File.expand_path(".oh-my-zsh", userdata['dir']) do
   user username
 end
 
+git File.expand_path(".rbenv", userdata['dir']) do
+  repository 'https://github.com/sstephenson/rbenv.git'
+  user username
+end
+
+directory File.expand_path(".rbenv/plugins", userdata['dir']) do
+  user username
+end
+
+git File.expand_path(".rbenv/plugins/ruby-build", userdata['dir']) do
+  repository 'https://github.com/sstephenson/ruby-build.git'
+  user username
+end
 
