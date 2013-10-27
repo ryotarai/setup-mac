@@ -63,6 +63,17 @@ end
   end
 end
 
+last_brew_update_time = 0
+last_brew_update_time_file = File.expand_path('brew-update-time', Chef::Config[:file_cache_path])
+if File.exists?(last_brew_update_time_file)
+  last_brew_update_time = File.read(last_brew_update_time_file).to_i
+end
+time_since_brew_update = Time.now.to_i - last_brew_update_time
+if time_since_brew_update > 60 * 60 * 24
+  execute "brew update"
+  open(last_brew_update_time_file, 'w') {|f| f.write(Time.now.to_i.to_s) }
+end
+
 %w! autossh zsh git ag !.each do |p|
   package p do
     provider Chef::Provider::Package::Homebrew
