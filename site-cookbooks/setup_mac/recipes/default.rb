@@ -116,3 +116,18 @@ git File.expand_path(".rbenv/plugins/ruby-build", userdata['dir']) do
   user username
 end
 
+unless File.exists?(File.expand_path('local/go', userdata['dir']))
+  url = 'https://go.googlecode.com/files/go1.1.2.darwin-amd64.tar.gz'
+  remote_file "#{Chef::Config[:file_cache_path]}/#{File.basename(url)}" do
+    source url
+    user username
+  end
+  user_local_dir = File.expand_path('local', userdata['dir'])
+  directory user_local_dir do
+    user username
+  end
+  execute "tar -C #{user_local_dir} -xzf #{Chef::Config[:file_cache_path]}/#{File.basename(url)}" do
+    user username
+  end
+end
+
