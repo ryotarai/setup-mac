@@ -36,6 +36,11 @@ dmg_package 'Google Chrome' do
   action   :install
 end
 
+dmg_package 'VirtualBox' do
+  source 'http://download.virtualbox.org/virtualbox/4.3.0/VirtualBox-4.3.0-89960-OSX.dmg'
+  type 'pkg'
+  action :install
+end
 {
   "http://iterm2.com/downloads/stable/iterm2_v1_0_0.zip" => "iTerm",
   "http://i.agilebits.com/dist/1P/mac4/1Password-4.0.2.zip" => "1Password 4",
