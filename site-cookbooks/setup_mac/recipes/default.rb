@@ -63,7 +63,7 @@ end
   end
 end
 
-%w! autossh zsh git !.each do |p|
+%w! autossh zsh git ag !.each do |p|
   package p do
     provider Chef::Provider::Package::Homebrew
   end
