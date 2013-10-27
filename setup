@@ -1,8 +1,10 @@
 #!/bin/sh
+set -ex
+export PATH="/usr/bin:$PATH"
 if ! [ -f /usr/bin/bundle ]; then
-    /usr/bin/gem install bundler
+    gem install bundler
 fi
-/usr/bin/bundle install
-/usr/bin/berks install --path=cookbooks
-sudo /usr/bin/chef-solo -c .chef/solo.rb
+bundle install
+berks install --path=cookbooks
+sudo chef-solo -c .chef/solo.rb
 
