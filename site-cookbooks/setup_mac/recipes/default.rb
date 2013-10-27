@@ -41,6 +41,12 @@ dmg_package 'VirtualBox' do
   type 'pkg'
   action :install
 end
+
+dmg_package 'SourceTree' do
+  source 'http://downloads.atlassian.com/software/sourcetree/SourceTree_1.7.3.dmg'
+  action :install
+end
+
 {
   "http://iterm2.com/downloads/stable/iterm2_v1_0_0.zip" => "iTerm",
   "http://i.agilebits.com/dist/1P/mac4/1Password-4.0.2.zip" => "1Password 4",
